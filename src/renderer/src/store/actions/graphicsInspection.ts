@@ -15,6 +15,6 @@ export const runInspection = () => async (dispatch: Dispatch) => {
   if (secondResult.status === InspectionWorkerStatus.ERROR) {
     dispatch(graphicsInspectionActions.PAUSE_INSPECTION())
   }
-  await workerWrapped.lastOperation(Number(secondResult.data), 3)
-  dispatch(graphicsInspectionActions.FINISH_INSPECTION())
+  await workerWrapped.lastOperation(Number(secondResult.data), 4)
+  dispatch(graphicsInspectionActions.FINISH_INSPECTION()) 
 }
