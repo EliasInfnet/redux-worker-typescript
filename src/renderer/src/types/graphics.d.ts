@@ -1,4 +1,4 @@
-import { GraphicsInspectionCriticality } from '@renderer/enum/graphics'
+import { GraphicsInspectionCriticality, GraphicsTaskSteps } from '@renderer/enum/graphics'
 
 type GraphicsInspectionDiff = {
   id: string
@@ -13,6 +13,14 @@ type GraphicsInspectionData = {
 }
 
 type GraphicsInspection = {
+  id: string
+  name: string
+  interval: number | null
   status: GraphicsTaskStatus
+  step: GraphicsTaskSteps | null
   data: GraphicsInspectionData
+}
+
+type GraphicsInspections = {
+  [id: string]: GraphicsInspection
 }

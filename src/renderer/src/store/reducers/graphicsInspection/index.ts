@@ -1,29 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { GraphicsTaskStatus } from '@renderer/enum/graphics'
-import { GraphicsInspection } from '@renderer/types/graphics'
-
-const initialState: GraphicsInspection = {
-  status: GraphicsTaskStatus.IDLE,
-  data: {}
-}
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { GraphicsTaskStatus, GraphicsTaskSteps } from '@renderer/enum/graphics'
+import { GraphicsInspection, GraphicsInspections } from '@renderer/types/graphics'
+import inspections from '../../../mock/graphicsInspection'
 
 export const graphicsInspectionSlice = createSlice({
   name: 'graphicsInspection',
-  initialState,
+  initialState: inspections,
   reducers: {
-    START_INSPECTION(state: GraphicsInspection) {
-      state.status = GraphicsTaskStatus.EXECUTING
+    SET_INSPECTION_STEP(
+      state: GraphicsInspections,
+      data: PayloadAction<{ id: string; step: GraphicsTaskSteps }>
+    ) {
+      state[data.payload.id].step = data.payload.step
     },
-    PAUSE_INSPECTION(state: GraphicsInspection) {
-      state.status = GraphicsTaskStatus.PAUSED
+    SET_INSPECTION_STATUS(
+      state: GraphicsInspections,
+      data: PayloadAction<{ id: string; status: GraphicsTaskStatus }>
+    ) {
+      state[data.payload.id].status = data.payload.status
     },
-    FINISH_INSPECTION(state: GraphicsInspection) {
-      state.status = GraphicsTaskStatus.IDLE
+    SET_INSPECTION_INTERVAL(
+      state: GraphicsInspections,
+      data: PayloadAction<{ id: string; interval: number }>
+    ) {
+      state[data.payload.id].interval = data.payload.interval
     }
   },
   selectors: {
-    getInspectionStatusSelector: (state: GraphicsInspection) => {
-      return state.status
+    getInspections: (state: GraphicsInspections): GraphicsInspection[] => {
+      return Object.values(state)
+    },
+    getInspectionStatusSelector: (
+      state: GraphicsInspections,
+      id: string
+    ): GraphicsTaskStatus | null => {
+      return state[id].status
+    },
+    getInspectionStepSelector: (
+      state: GraphicsInspections,
+      id: string
+    ): GraphicsTaskSteps | null => {
+      return state[id].step
     }
   }
 })
