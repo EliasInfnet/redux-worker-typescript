@@ -28,8 +28,28 @@ const thirdInspection: GraphicsInspection = {
   data: {}
 }
 
+const fourthInspection: GraphicsInspection = {
+  id: 'b4a5e77b-a236-4955-956c-83a887270357',
+  name: 'Fourth Inspection',
+  interval: null,
+  step: null,
+  status: GraphicsTaskStatus.IDLE,
+  data: {}
+}
+
+const fifthInspection: GraphicsInspection = {
+  id: 'dadadada-a236-4955-956c-83a887270357',
+  name: 'Fifth Inspection',
+  interval: null,
+  step: null,
+  status: GraphicsTaskStatus.IDLE,
+  data: {}
+}
+
 export default {
   [firstInspection.id]: firstInspection,
   [secondInspection.id]: secondInspection,
-  [thirdInspection.id]: thirdInspection
+  [thirdInspection.id]: thirdInspection,
+  [fourthInspection.id]: fourthInspection,
+  [fifthInspection.id]: fifthInspection
 }

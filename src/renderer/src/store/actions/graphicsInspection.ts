@@ -34,6 +34,7 @@ export const runInspection = (id: string) => async (dispatch: Dispatch) => {
       step: GraphicsTaskSteps.THRESHOLD
     })
   )
+
   const threshold = await workerWrapped.threshold(Number(featureMatch.data), 2)
 
   dispatch(
@@ -48,19 +49,16 @@ export const runInspection = (id: string) => async (dispatch: Dispatch) => {
   //   dispatch(graphicsInspectionActions.SET_INSPECTION_STEP(GraphicsTaskSteps.ERROR))
   //   return
   // }
-
+  if (store.getState().graphicsInspection[id].status === GraphicsTaskStatus.CANCELED) {
+    workerWrapped.exit()
+    return
+  }
   dispatch(
     graphicsInspectionActions.SET_INSPECTION_STEP({
       id,
       step: GraphicsTaskSteps.MERGE_RECTS
     })
   )
-
-  if (store.getState().graphicsInspection[id].status === GraphicsTaskStatus.CANCELED) {
-    
-    workerWrapped.exit()
-    return
-  }
 
   const mergeRects = await workerWrapped.subtraction(Number(subtraction.data), 2)
   console.log(mergeRects)
